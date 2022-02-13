@@ -27,7 +27,7 @@ export default {
         return {
             checkedCount: 0,
             yearsOfMovie : [],
-            currentYear : 0,
+            currentYear : 2015,
         }
     },
     components: {
@@ -39,7 +39,8 @@ export default {
         },
         loadYearsOfMovie(){
             const options = [];
-            const randNum = new Date().getFullYear() - Math.floor(Math.random() * 10);
+            // const randNum = new Date().getFullYear() - Math.floor(Math.random() * 15);
+            const randNum = this.currentYear;
             for (let index = new Date().getFullYear() - 15 ; index <= new Date().getFullYear() ; index++) {
                 let selected;
                 if (randNum == index){
@@ -48,7 +49,7 @@ export default {
                 } 
                 options.push({
                     year : index,
-                    selected : selected,
+                    selected : selected
                 });
             }
             this.yearsOfMovie = options;
