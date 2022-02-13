@@ -27,7 +27,7 @@
 <script>
 import TheBody from "./Table.vue";
 export default {
-    props: ["yearOfMovie"],
+    props: ["currentYear"],
     components: {
         TheBody,
     },
@@ -37,7 +37,7 @@ export default {
             isLoading: false,
             messageError : null,
             isAllChecked : false,
-            presYear : this.yearOfMovie,
+            presYear : this.currentYear,
             childChecked : [],
         }
     },
@@ -113,8 +113,8 @@ export default {
             this.isLoading = false;
             this.$emit('counterCheck', (this.isAllChecked)? results.length : 0);
         },
-        yearOfMovie(event){
-            this.presYear = event;
+        currentYear(value){
+            this.presYear = value;
             this.childChecked = [];
             this.loadExperiences();
         },
@@ -122,7 +122,8 @@ export default {
         }
     },
     mounted() {
-        this.loadExperiences();
+        // this.loadExperiences();
+
     },
 };
 </script>

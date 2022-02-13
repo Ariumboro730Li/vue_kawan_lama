@@ -9,8 +9,8 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="">Year of Movie</label>
-                            <select class="form-control" name="" @change="selectYearofMovie" id="">
-                                <option v-for="year in yearsOfMovie" :key="year.year">{{year.year}}</option>
+                            <select class="form-control" name="" @change="selectcurrentYear" id="">
+                                <option v-for="year in yearsOfMovie" :key="year.year" :selected="year.selected">{{year.year}}</option>
                             </select>
                         </div>
                     </div>
@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <the-child :yearOfMovie="yearOfMovie" @counterCheck="checkedCount = $event"></the-child>
+    <the-child :currentYear="currentYear" @counterCheck="checkedCount = $event" ref="child"></the-child>
 </template>
 <script>
 import TheChild from "./Child.vue";
@@ -27,24 +27,32 @@ export default {
         return {
             checkedCount: 0,
             yearsOfMovie : [],
-            yearOfMovie : 2010,
+            currentYear : 0,
         }
     },
     components: {
         TheChild
     },
     methods: {
-        selectYearofMovie(event){
-            this.yearOfMovie = event.target.value;
+        selectcurrentYear(event){
+            this.currentYear = event.target.value;
         },
         loadYearsOfMovie(){
             const options = [];
+            const randNum = new Date().getFullYear() - Math.floor(Math.random() * 10);
             for (let index = new Date().getFullYear() - 15 ; index <= new Date().getFullYear() ; index++) {
+                let selected;
+                if (randNum == index){
+                    selected = "selected";
+                    this.currentYear = index;
+                } 
                 options.push({
-                    year : index
+                    year : index,
+                    selected : selected,
                 });
             }
             this.yearsOfMovie = options;
+            this.$refs.child.loadExperiences();
         },
     },
     mounted(){
